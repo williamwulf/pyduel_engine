@@ -1,0 +1,13 @@
+build/
+.coverage
+*.pyc
+.idea
+*.iml
+pyduels_engine.egg-info
+*.DS_Store*
+nosetests.xml
+pyduels_engine/coverage.xml
+cache-store
+cache-config
+*~
+.python-version
