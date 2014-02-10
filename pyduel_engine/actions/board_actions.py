@@ -31,3 +31,8 @@ def remove_character():
 
 def remove_multiple_characters():
     pass
+
+
+def initialize_board(board_type=None):
+    # return init.board_initializer(choose_game_board(board_type))
+    pass

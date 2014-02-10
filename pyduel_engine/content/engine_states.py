@@ -4,9 +4,7 @@ from enum import Enum
 
 
 class SquareState(Enum):
-    """
-    Base Square States
-    """
+    """Base Square States"""
     empty = 0
     dark = 1
     light = 2
@@ -15,12 +13,29 @@ class SquareState(Enum):
 
 
 class Rolls(Enum):
-    """
-    Dice Sides
-    """
-    TWO_ALL = 0
-    THREE = 1
-    THREE_ALL = 2
-    FOUR = 3
-    FOUR_ALL = 4
-    FIVE = 5
+    """Dice Sides"""
+    two_all = 0
+    three = 1
+    three_all = 2
+    four = 3
+    four_all = 4
+    five = 5
+
+
+class Actions(Enum):
+    """Squad Actions"""
+    draw = 0
+    attack = 1
+    special = 2
+    power_attack = 3
+    heal_main = 5
+    heal_minor = 6
+
+
+class Cards(Enum):
+    """Card Types"""
+    combat = 0
+    special = 1
+    power_attack = 2
+    power_defense = 3
+    power_combat = 4

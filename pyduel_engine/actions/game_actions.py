@@ -6,21 +6,33 @@ def roll():
     pass
 
 
-def move():
-    """Move Squad"""
+def move_character(character):
+    """Move character"""
     pass
+
+
+def move_squad(squad):
+    """move squad"""
+    for character in squad:
+        move_character(character)
 
 
 def action():
-    """"""
+    """squad perform actions"""
     pass
 
 
-def turn():
+def turn(squad):
     """squad turn"""
     roll()
-    move()
+    move_squad(squad)
     action()
+
+
+def set_squad_side(squad, state):
+    """Set what side the squad"""
+    squad['side'] = state
+
 
 
 

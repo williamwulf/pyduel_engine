@@ -25,9 +25,7 @@ def is_parallel(origin, target):
 
 
 def is_adjacent(origin, target):
-    """
-    Verify if points are adjacent
-    """
+    """Verify if points are adjacent"""
     return ((origin['x'] == target['x'] and
              fabs(origin['y'] - target['y'])) == 1) or \
            ((origin['x'] == target['y'] and
@@ -39,11 +37,8 @@ def is_adjacent(origin, target):
 
 
 def _is_parallel_clear_x_axis(board, origin, target):
-    """
-    called if the pivot is on the x plane
-    and traverses through all the squares
-    to check if path is clear
-    """
+    """called if the pivot is on the x plane and traverses through all the
+    squares to check if path is clear"""
     pivot = origin['x']
     if origin['y'] < target['y']:
         index = origin['y'] + 1
@@ -60,11 +55,8 @@ def _is_parallel_clear_x_axis(board, origin, target):
 
 
 def _is_parallel_clear_y_axis(board, origin, target):
-    """
-    called if the pivot is on the y plane
-    and traverses through all the squares
-    to check if path is clear
-    """
+    """called if the pivot is on the y plane and traverses through all the
+    squares to check if path is clear"""
     pivot = origin['y']
 
     if origin['x'] < target['x']:
@@ -106,8 +98,7 @@ def is_diagonal_clear(board, origin, target):
     Verify if there is a clear diagonal path between two points
     """
 
-    x = -1
-    y = -1
+    x, y = -1, -1
     end = int(fabs(origin['x'] - target['x']) - 1)
 
     # set modifiers for x and y coordinate traversal

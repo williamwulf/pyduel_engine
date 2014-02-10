@@ -4,17 +4,6 @@ from random import randrange
 from random import shuffle
 
 
-# ANAKIN_SKYWALKER = {'name': 'Anakin Skywalker',
-#                     'hp': 18,
-#                     'is_main': True,
-#                     'max_hp': 18,
-#                     'type': CT.ANAKIN_SKYWALKER,
-#                     'state': CT.LIGHT,
-#                     'pos': None,
-#                     'is_range': False,
-#                     'deck': decks.ANAKIN_SKYWALKER_DECK}
-
-
 def choose_card(cards, index):
     """return card from list of cards """
     return cards.pop(index)
@@ -43,16 +32,16 @@ def deal_cards_to_squads(squads, num_cards=4):
 
 def discard_card(squad, card_index=None):
     """Discard a card. if card_index is None, discard random card"""
-
     if not card_index:
         card_index = randrange(0, len(squad))
 
     squad['discard'].append(choose_card(squad['hand'], card_index))
 
 
-def discard_cards(squad, num_cards=None, card_indices=None, ):
+def discard_cards(squad, num_cards=None, card_indices=None):
+    """discard multiple cards"""
     if num_cards:
-        for _ in range(num_cards):
+        for _ in range(0, num_cards):
             discard_card(squad)
     elif card_indices:
         for index in sorted(card_indices, reverse=True):
@@ -60,11 +49,6 @@ def discard_cards(squad, num_cards=None, card_indices=None, ):
     else:
         #todo: throw an exception
         pass
-
-
-def has_hand(squad):
-    """Does squad have any cards in hand return boolean"""
-    return len(squad['hand']) > 0
 
 
 def shuffle_discard_into_deck(squad):
@@ -75,3 +59,15 @@ def shuffle_discard_into_deck(squad):
     squad['deck'].extend(squad['discard'])
     squad['discard'] = []
     squad['deck'] = shuffle(squad['deck'])
+
+
+def main_cards(squad):
+    """check hand for card belonging to main character"""
+    # if has_hand(squad):
+    #     for character in squad['characters']:
+    #         if character['is_main']:
+    #             for card in squad['hand']:
+    #                 if card['owner'] == character['type']:
+    #                     return True
+    # return False
+    pass
