@@ -2,13 +2,12 @@ __author__ = 'aelkikhia'
 
 from pyduel_engine.rules import squad_rules
 from pyduel_engine.content.engine_states import Actions
-from pyduel_engine.actions import deck_actions
+from pyduel_engine.actions import card_actions as ca
 
 
-# card related actions
 def squad_draw_card(squad):
     if squad_rules.can_draw_card(squad):
-        deck_actions.draw_card(squad)
+        ca.draw_card(squad)
 
 
 def play_card():

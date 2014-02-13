@@ -39,3 +39,20 @@ class Cards(Enum):
     power_attack = 2
     power_defense = 3
     power_combat = 4
+
+
+#######################################################
+########### Generic types for testing #################
+#######################################################
+
+
+class Character(Enum):
+    """Base Square States"""
+    main = 0
+    minor_1 = 1
+    minor_2 = 2
+
+
+class Boards(Enum):
+    """generic boards"""
+    board = 0

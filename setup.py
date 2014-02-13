@@ -15,6 +15,7 @@ setup(
     author='Taz El-Kikhia',
     author_email='aelkikhia@gmail.com',
     tests_require=[
+        "pep8",
         "mock",
         "nose",
         "nosexcover",

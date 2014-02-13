@@ -3,9 +3,9 @@ import unittest
 
 
 def suite():
-    suite = unittest.TestSuite()
-    suite.addTest(WhenTestingActionRules())
-    return suite
+    test_suites = unittest.TestSuite()
+    test_suites.addTest(WhenTestingActionRules())
+    return test_suites
 
 
 class WhenTestingActionRules(unittest.TestCase):

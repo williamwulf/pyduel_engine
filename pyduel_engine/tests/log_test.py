@@ -1,7 +1,7 @@
 import logging
 import unittest
 
-from epicduels import log
+from pyduel_engine import log
 
 
 class WhenTestingGetLogger(unittest.TestCase):

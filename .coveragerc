@@ -1,2 +1,2 @@
 [report]
-omit = etc/*,setup.py,*egg*,.tox/*,epicduels/tests/*
+omit = setup.py,*egg*,.tox/*,pyduel_engine/tests/*

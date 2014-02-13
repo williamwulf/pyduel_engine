@@ -17,7 +17,7 @@ def move_squad(squad):
         move_character(character)
 
 
-def action():
+def actions():
     """squad perform actions"""
     pass
 
@@ -26,13 +26,16 @@ def turn(squad):
     """squad turn"""
     roll()
     move_squad(squad)
-    action()
+    actions()
 
 
 def set_squad_side(squad, state):
     """Set what side the squad"""
     squad['side'] = state
 
+
+def setup_engine():
+    pass
 
 
 

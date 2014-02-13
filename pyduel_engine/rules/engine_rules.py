@@ -18,7 +18,7 @@ def play_order():
     pass
 
 
-def use_actions(game):
+def use_actions():
     """
     calls choose action then uses returned action type as key to dictionary
     of action methods

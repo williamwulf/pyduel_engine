@@ -11,8 +11,8 @@ class Dice(object):
         self.result = self.roll()
 
     def print_result(self):
-        return Rolls[self.result]
+        return Rolls(self.result)
 
     def roll(self):
-        self.result = Rolls[random.randint(0, self.sides)]
+        self.result = Rolls(random.randint(0, self.sides))
         return self.result

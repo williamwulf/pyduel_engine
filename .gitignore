@@ -3,10 +3,10 @@ build/
 *.pyc
 .idea
 *.iml
-pyduels_engine.egg-info
+pyduel_engine.egg-info
 *.DS_Store*
 nosetests.xml
-pyduels_engine/coverage.xml
+pyduel_engine/coverage.xml
 cache-store
 cache-config
 *~

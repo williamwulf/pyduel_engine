@@ -6,21 +6,18 @@ from pyduel_engine.content.engine_states import SquareState as Sq
 
 
 def square_state(board, pos):
+    """Get square state from board"""
     return board['board'][pos['x']][pos['y']]
 
 
 def is_diagonal(origin, target):
-    """
-    Verify if points are diagonal
-    """
+    """Verify if points are diagonal"""
     return fabs(origin['x'] - target['x']) == fabs(origin['y'] - target['y'])
 
 
 # verify if positions are parallel
 def is_parallel(origin, target):
-    """
-    Verify if points are parallel
-    """
+    """Verify if points are parallel"""
     return origin['x'] == target['x'] or origin['y'] == target['y']
 
 
@@ -47,7 +44,7 @@ def _is_parallel_clear_x_axis(board, origin, target):
         index = target['y'] + 1
         end = origin['y']
     while index != end:
-        if board[pivot][index] == Sq.EMPTY or board[pivot][index] == Sq.HOLE:
+        if board[pivot][index] == Sq.empty or board[pivot][index] == Sq.hole:
             index += 1
         else:
             return False
@@ -74,9 +71,7 @@ def _is_parallel_clear_y_axis(board, origin, target):
 
 
 def is_parallel_clear(board, origin, target):
-    """
-    Verify if there is a clear parallel path between two points
-    """
+    """Verify if there is a clear parallel path between two points"""
     # not parallel, moot point
     if not is_parallel(origin, target):
         return False
@@ -92,11 +87,8 @@ def is_parallel_clear(board, origin, target):
         return _is_parallel_clear_y_axis(board, origin, target)
 
 
-# Verify if the diagonal path between two squares is not obstructed.
 def is_diagonal_clear(board, origin, target):
-    """
-    Verify if there is a clear diagonal path between two points
-    """
+    """Verify if there is a clear diagonal path between two points"""
 
     x, y = -1, -1
     end = int(fabs(origin['x'] - target['x']) - 1)
@@ -116,42 +108,33 @@ def is_diagonal_clear(board, origin, target):
 
 
 def is_legal_target(char, target):
-    """
-    verify if legal target
-    """
+    """verify if legal target"""
     if not char['is_range'] and not is_adjacent(char['pos'], target['pos']):
         return False
     return char['state'] != target['state']
 
 
 def can_range_attack(board, char, target):
-    """
-    Verify if target can be range attacked.
-    """
+    """Verify if target can be range attacked."""
     return is_legal_target(char, target) and is_diagonal_clear(board,
                                                                char['pos'],
                                                                target['pos'])
 
 
 def can_melee_attack(char1, target):
-    """
-    verify if target can be melee attacked
-    """
+    """verify if target can be melee attacked"""
     return is_legal_target(char1, target) and is_adjacent(char1['pos'],
                                                           target['pos'])
 
 
 def get_all_adjacent_characters(chars, origin):
-    """
-    return list of adjacent characters (I love list comprehension)
-    """
+    """return list of adjacent characters (I love list comprehension)"""
     return [char for char in chars
             if is_adjacent(origin['pos'], char['pos'])]
 
 
 def get_all_adjacent_friends(chars, origin):
-    """
-    return list of adjacent friendly characters (I love list comprehension)
+    """return list of adjacent friendly characters (I love list comprehension)
     """
     return [char for char in chars
             if is_adjacent(origin['pos'], char['pos']) and
@@ -159,8 +142,7 @@ def get_all_adjacent_friends(chars, origin):
 
 
 def get_all_adjacent_enemies(chars, origin):
-    """
-    return list of adjacent enemy characters (I love list comprehension)
+    """return list of adjacent enemy characters (I love list comprehension)
     """
     return [char for char in chars
             if is_adjacent(origin['pos'], char['pos']) and
@@ -168,8 +150,7 @@ def get_all_adjacent_enemies(chars, origin):
 
 
 def is_obstructed(board, pos):
-    """
-    Verify if a character can move through any of the adjacent squares
+    """Verify if a character can move through any of the adjacent squares
     """
     return \
         not can_move_through(board, pos,
@@ -182,24 +163,21 @@ def is_obstructed(board, pos):
 
 
 def is_out_of_bounds(board, pos):
-    """
-    check if square is out of bounds or not
+    """check if square is out of bounds or not
     """
     return pos['x'] >= board['max_x'] or pos['x'] < 0 or pos['y'] < 0 or \
         pos['y'] >= board['max_y']
 
 
 def can_move_through(board, pos, new_pos):
-    """
-    verifies if a a square can be moved on or through
+    """verifies if a a square can be moved on or through
     """
     return square_state(board, new_pos) == Sq.empty or \
         square_state(board, new_pos) == square_state(board, pos)
 
 
 def find_moves(board, num_moves, pos, new_pos=None, list_moves=None):
-    """
-    returns list of all possible moves for a given character
+    """returns list of all possible moves for a given character
     """
     if not new_pos:
         new_pos = pos
