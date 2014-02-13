@@ -84,9 +84,6 @@ def character_has_card(squad, character, card_types):
     return False
 
 
-
-
-
 def is_main_dead(squad):
     """is main character dead"""
     return sum([char['hp'] for char in squad['characters']

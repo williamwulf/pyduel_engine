@@ -10,9 +10,9 @@ from pyduel_engine.rules import squad_rules as sr
 
 
 def suite():
-    suites = unittest.TestSuite()
-    suites.addTest(WhenTestingSquadRules())
-    return suites
+    test_suites = unittest.TestSuite()
+    test_suites.addTest(WhenTestingSquadRules())
+    return test_suites
 
 
 class WhenTestingSquadRules(unittest.TestCase):
@@ -22,11 +22,11 @@ class WhenTestingSquadRules(unittest.TestCase):
                         'max_hp': 18, 'type': Cs.main, 'state': State.light,
                         'pos': {'x': 0, 'y': 0}, 'deck': [], 'is_range': False}
 
-        self.minor_1l = {'name': 'minor_1', 'hp': 4, 'is_main': True,
+        self.minor_1l = {'name': 'minor_1', 'hp': 4, 'is_main': False,
                          'max_hp': 4, 'type': Cs.minor_1, 'state': State.dark,
                          'pos': {'x': 6, 'y': 6}, 'deck': [], 'is_range': True}
 
-        self.minor_2l = {'name': 'minor_2', 'hp': 4, 'is_main': True,
+        self.minor_2l = {'name': 'minor_2', 'hp': 4, 'is_main': False,
                          'max_hp': 4, 'type': Cs.minor_2,
                          'state': State.light,
                          'pos': {'x': 0, 'y': 0}, 'deck': [], 'is_range': True}
@@ -35,10 +35,10 @@ class WhenTestingSquadRules(unittest.TestCase):
                         'max_hp': 19, 'type': Cs.main, 'state': State.dark,
                         'pos': {'x': 6, 'y': 6}, 'deck': [], 'is_range': False}
 
-        self.minor_1d = {'name': 'minor_1', 'hp': 4, 'is_main': True,
+        self.minor_1d = {'name': 'minor_1', 'hp': 4, 'is_main': False,
                          'max_hp': 4, 'type': Cs.minor_1, 'state': State.dark,
                          'pos': {'x': 0, 'y': 0}, 'deck': [], 'is_range': True}
-        self.minor_2d = {'name': 'minor_2', 'hp': 4, 'is_main': True,
+        self.minor_2d = {'name': 'minor_2', 'hp': 4, 'is_main': False,
                          'max_hp': 4, 'type': Cs.minor_2, 'state': State.dark,
                          'pos': {'x': 6, 'y': 6}, 'deck': [], 'is_range': True}
 
@@ -99,6 +99,15 @@ class WhenTestingSquadRules(unittest.TestCase):
         self.squad1['hand'].append({'test_card': None})
         self.assertTrue(sr.can_play_card(self.squad1))
 
+    def is_main_dead_false(self):
+        self.assertFalse(sr.is_main_dead(self.squad1))
+
+    def is_main_dead_true(self):
+        self.main_1l['hp'] = 0
+        self.squad1['characters'] = [self.main_1l,
+                                     self.minor_1l,
+                                     self.minor_2l]
+        self.assertTrue(sr.is_main_dead(self.squad1))
 
 if __name__ == '__main__':
     unittest.main()
