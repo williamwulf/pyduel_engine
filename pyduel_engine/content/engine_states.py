@@ -3,13 +3,23 @@ __author__ = 'aelkikhia'
 from enum import Enum
 
 
-class SquareState(Enum):
+class Square(Enum):
     """Base Square States"""
-    empty = 0
-    dark = 1
-    light = 2
+    dark = 0
+    light = 1
+    empty = 2
     obstacle = 3
     hole = 4
+
+
+class Player(Enum):
+    """Base Square States"""
+    player_1 = 0
+    player_2 = 1
+    player_3 = 2
+    player_4 = 3
+    player_5 = 4
+    player_6 = 5
 
 
 class Rolls(Enum):

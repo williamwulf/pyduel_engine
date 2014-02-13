@@ -3,10 +3,9 @@ build/
 *.pyc
 .idea
 *.iml
+*.xml
 pyduel_engine.egg-info
 *.DS_Store*
-nosetests.xml
-pyduel_engine/coverage.xml
 cache-store
 cache-config
 *~

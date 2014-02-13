@@ -3,7 +3,7 @@ __author__ = 'aelkikhia'
 import unittest
 
 from pyduel_engine.content.engine_states import Character as Cs
-from pyduel_engine.content.engine_states import SquareState as State
+from pyduel_engine.content.engine_states import Square as State
 from pyduel_engine.content.engine_states import Boards as Bs
 from pyduel_engine.rules import board_rules as br
 

@@ -2,7 +2,7 @@ __author__ = 'aelkikhia'
 
 
 from math import fabs
-from pyduel_engine.content.engine_states import SquareState as Sq
+from pyduel_engine.content.engine_states import Square as Sq
 
 
 def square_state(board, pos):

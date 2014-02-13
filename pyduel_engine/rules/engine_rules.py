@@ -1,7 +1,7 @@
 
 from random import shuffle
 
-from pyduel_engine.content.engine_states import SquareState as Sq
+from pyduel_engine.content.engine_states import Square as Sq
 
 
 def is_game_over(squads):
