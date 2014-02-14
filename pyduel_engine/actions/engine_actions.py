@@ -36,7 +36,3 @@ def set_squad_side(squad, state):
 
 def setup_engine():
     pass
-
-
-
-

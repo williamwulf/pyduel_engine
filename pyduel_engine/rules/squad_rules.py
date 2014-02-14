@@ -1,6 +1,5 @@
-"""
-squad_rules.py is a collection of methods for validating actions according to
-the default game rules of the duel engine
+"""squad_rules.py is a collection of methods for validating actions according
+to the default game rules of the duel engine
 
 JSON FORMAT FOR A SQUAD
 squad = {'player': <int>,
@@ -27,7 +26,7 @@ COMBAT_5_1 = {'type': COMBAT, 'name': 'combat', 'attack': 5, 'defense': 1,
 'owner': '', 'description': ''}
 """
 
-from pyduel_engine.content.engine_states import Cards
+from pyduel_engine.content.engine_states import Card
 
 
 ###################### Actions ######################################
@@ -49,12 +48,14 @@ def can_play_card(squad):
 
 def can_heal_main(squad):
     """Can heal minor character. main must be dead and must have main card"""
-    return are_minors_dead(squad) and has_main_card(squad)
+    # TODO: Method to check if main needs to be healed
+    return are_minors_dead(squad) and has_minor_card(squad)
 
 
 def can_heal_minor(squad):
     """Can heal minor character. main must be dead and must have main card"""
-    return is_main_dead(squad) and has_minor_card(squad)
+    # TODO: Method to check if minor needs to be healed
+    return is_main_dead(squad) and has_main_card(squad)
 
 
 ###################### Character ######################################
@@ -64,18 +65,16 @@ def can_heal_minor(squad):
 #     return sum([char['hp'] for char in squad['characters']
 #                 if not character['is_main']]) == 0
 
+def is_main_dead(squad):
+    """is main character dead"""
+    return sum([char['hp'] for char in squad['characters']
+                if char['is_main']]) == 0
+
 
 def are_minors_dead(squad):
     """is/are minor character(s) dead"""
     return sum([char['hp'] for char in squad['characters']
                 if not char['is_main']]) == 0
-
-
-def is_main_dead(squad):
-    """is main character dead"""
-    print([char['hp'] for char in squad['characters'] if char['is_main']])
-    return sum([char['hp'] for char in squad['characters']
-                if char['is_main']]) == 0
 
 
 ############################ Hand ###################################
@@ -84,6 +83,29 @@ def is_main_dead(squad):
 def has_hand(squad):
     """Does squad have any cards in hand return boolean"""
     return len(squad['hand']) > 0
+
+
+def has_main_card(squad):
+    """check hand for card belonging to main character"""
+    if has_hand(squad):
+        for character in squad['characters']:
+            if character['is_main']:
+                for card in squad['hand']:
+                    if card['owner'] == character['type']:
+                        return True
+    return False
+
+
+def has_minor_card(squad):
+    """check hand for card belonging to minor character"""
+    # TODO: think of best way to account for different sub characters
+    if has_hand(squad):
+        for character in squad['characters']:
+            if character['is_main']:
+                for card in squad['hand']:
+                    if card['owner'] != character['type']:
+                        return True
+    return False
 
 
 def character_has_card(squad, character, card_types=None):
@@ -101,7 +123,7 @@ def character_has_card(squad, character, card_types=None):
                  if card['owner'] == character['type']]
         # if card type specified return total number of cards belonging to char
         if card_types:
-            return sum([card for card in cards
+            return len([card for card in cards
                         if card['type'] in card_types]) > 0
         # if no card type is specified
         return len(cards) > 0
@@ -114,7 +136,7 @@ def has_attack_card(squad, character):
     :param character: character
     :return: boolean
     """
-    types = [Cards.combat, Cards.power_attack, Cards.power_combat]
+    types = [Card.combat, Card.power_attack, Card.power_combat]
     return character_has_card(squad, character, types)
 
 
@@ -124,7 +146,7 @@ def has_defense_card(squad, character):
     :param character: character
     :return: boolean
     """
-    types = [Cards.combat, Cards.power_defense, Cards.power_combat]
+    types = [Card.combat, Card.power_defense, Card.power_combat]
     return character_has_card(squad, character, types)
 
 
@@ -134,29 +156,4 @@ def has_special_card(squad, character):
     :param character: character type
     :return: return boolean
     """
-    return character_has_card(squad, character, [Cards.special])
-
-
-def has_main_card(squad):
-    """check hand for card belonging to main character"""
-    if has_hand(squad):
-        for character in squad['characters']:
-            if character['is_main']:
-                for card in squad['hand']:
-                    if card['owner'] == character['type']:
-                        return True
-    return False
-
-
-def has_minor_card(squad):
-    """check hand for card belonging to minor character
-    #TODO: think of best way to account for different sub characters
-    """
-    if has_hand(squad):
-        for character in squad['characters']:
-            if character['is_main']:
-                for card in squad['hand']:
-                    if card['owner'] != character['type']:
-                        return True
-    return False
-
+    return character_has_card(squad, character, [Card.special])

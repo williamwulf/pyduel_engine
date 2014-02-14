@@ -34,7 +34,7 @@
 #     for square_states in BS.BOARDS[board_type]['states']:
 #         for pos in BS.BOARDS[board_type]['states'][square_states]:
 #             board[pos['x']][pos['y']] = square_states
-#     return {'board_type': board_type, 'max_x': 10, 'max_y': 7, 'board': board}
+#     return {'board_type': board_type, 'max_x': 10, 'max_y': 7,'board': board}
 
 
 def set_squad_side(squad, side):
@@ -79,5 +79,3 @@ def number_secondary_characters(characters):
             char['number'] = number
             number += 1
     return characters
-
-

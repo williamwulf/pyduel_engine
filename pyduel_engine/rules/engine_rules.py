@@ -30,6 +30,3 @@ def use_actions():
 
 def place_squad_on_board():
     pass
-
-
-

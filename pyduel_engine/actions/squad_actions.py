@@ -65,5 +65,3 @@ def get_available_actions(squad):
     #
     # return available_actions
     pass
-
-

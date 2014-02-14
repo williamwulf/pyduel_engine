@@ -42,7 +42,7 @@ class Actions(Enum):
     heal_minor = 6
 
 
-class Cards(Enum):
+class Card(Enum):
     """Card Types"""
     combat = 0
     special = 1
@@ -59,11 +59,9 @@ class Cards(Enum):
 class Character(Enum):
     """Base Square States"""
     main = 0
-    minor_1 = 1
-    minor_2 = 2
+    minor = 1
 
 
 class Boards(Enum):
     """generic boards"""
     board = 0
-
