@@ -61,6 +61,7 @@ class WhenTestingSquadRules(unittest.TestCase):
                        'side': State.dark}
 
     ######################## are_minors_dead(squad) #########################
+
     def test_are_minors_dead_false_both_alive(self):
         self.assertFalse(sr.are_minors_dead(self.squad1))
 
@@ -81,6 +82,7 @@ class WhenTestingSquadRules(unittest.TestCase):
         self.assertTrue(sr.are_minors_dead(self.squad1))
 
     ######################## can_act(squad) ##############################
+
     def test_can_act_true(self):
         self.assertTrue(sr.can_act(self.squad1))
 
@@ -89,6 +91,7 @@ class WhenTestingSquadRules(unittest.TestCase):
         self.assertFalse(sr.can_act(self.squad1))
 
     ######################## can_play_card(squad) ########################
+
     def test_can_play_card_false_no_actions(self):
         self.squad1['actions'] = 0
         self.assertFalse(sr.can_play_card(self.squad1))
@@ -101,8 +104,9 @@ class WhenTestingSquadRules(unittest.TestCase):
         self.assertTrue(sr.can_play_card(self.squad1))
 
     ######################## is_main_dead(squad) #########################
+
     def test_is_main_dead_false(self):
-        self.assertFalse(sr.is_main_dead(self.squad1))
+        self.assertFalse(sr.is_main_dead(self.squad1, ))
 
     def test_is_main_dead_true(self):
         self.main_1l['hp'] = 0
