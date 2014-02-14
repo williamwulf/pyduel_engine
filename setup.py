@@ -1,6 +1,6 @@
 __author__ = 'aelkikhia'
 
-# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-exit
 try:
     from setuptools import setup, find_packages
 except ImportError:

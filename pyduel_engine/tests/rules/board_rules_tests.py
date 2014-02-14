@@ -28,6 +28,7 @@ class WhenTestingBoardRules(unittest.TestCase):
                       'board': [[State.empty for y in range(0, 7)]
                                 for x in range(0, 10)]}
 
+    ######################### is_diagonal ####################################
     def test_if_square_is_diagonal_true(self):
         self.assertTrue(br.is_diagonal(self.char1['pos'], self.char2['pos']))
 
@@ -35,6 +36,7 @@ class WhenTestingBoardRules(unittest.TestCase):
         self.char2['pos'] = {'x': 5, 'y': 6}
         self.assertFalse(br.is_diagonal(self.char1['pos'], self.char2['pos']))
 
+    ######################### is_parallel ####################################
     def test_if_squares_are_parallel_false(self):
         self.assertFalse(br.is_parallel(self.char1['pos'], self.char2['pos']))
 
@@ -42,6 +44,7 @@ class WhenTestingBoardRules(unittest.TestCase):
         self.char2['pos'] = {'x': 0, 'y': 6}
         self.assertTrue(br.is_parallel(self.char1['pos'], self.char2['pos']))
 
+    ######################### is_adjacent ####################################
     def test_if_squares_are_adjacent_false(self):
         self.assertFalse(br.is_adjacent(self.char1['pos'], self.char2['pos']))
 
@@ -49,6 +52,7 @@ class WhenTestingBoardRules(unittest.TestCase):
         self.char2['pos'] = {'x': 0, 'y': 1}
         self.assertTrue(br.is_adjacent(self.char1['pos'], self.char2['pos']))
 
+    ######################### is_parallel_clear ##############################
     def test_if_parallel_squares_are_clear_false_not_parallel(self):
         self.assertFalse(br.is_parallel_clear(
             self.board['board'], self.char1['pos'], self.char2['pos']))
@@ -84,6 +88,7 @@ class WhenTestingBoardRules(unittest.TestCase):
                                               {'x': 0, 'y': 0},
                                               {'x': 6, 'y': 0}))
 
+    ######################### is_diagonal_clear ##############################
     def test_board_is_diagonal_clear_true(self):
         self.assertTrue(br.is_diagonal_clear(self.board['board'],
                                              {'x': 1, 'y': 3},
@@ -100,6 +105,7 @@ class WhenTestingBoardRules(unittest.TestCase):
                                               {'x': 1, 'y': 3},
                                               {'x': 4, 'y': 0}))
 
+    ######################### is_legal_target ##############################
     def test_board_is_legal_target_melee_not_adjacent_false(self):
         self.assertFalse(br.is_legal_target(self.char1, self.char2))
 
@@ -111,6 +117,7 @@ class WhenTestingBoardRules(unittest.TestCase):
         self.char2['pos'] = {'x': 2, 'y': 3}
         self.assertTrue(br.is_legal_target(self.char1, self.char2))
 
+    ######################### can_melee_attack ##############################
     def test_can_melee_attack_true(self):
         self.char1['pos'] = {'x': 2, 'y': 2}
         self.char2['pos'] = {'x': 2, 'y': 3}
@@ -119,6 +126,7 @@ class WhenTestingBoardRules(unittest.TestCase):
     def test_can_melee_attack_false(self):
         self.assertFalse(br.can_melee_attack(self.char1, self.char2))
 
+    ######################### can_range_attack ##############################
     def test_can_range_attack_false(self):
         self.assertFalse(br.can_range_attack(self.board['board'], self.char1,
                                              self.char2))
@@ -128,6 +136,7 @@ class WhenTestingBoardRules(unittest.TestCase):
         self.assertTrue(br.can_range_attack(self.board['board'], self.char1,
                                             self.char2))
 
+    ######################### is_obstructed ##############################
     def test_is_obstructed_surrounded_true(self):
         self.board['board'][3][5] = State.light
         self.board['board'][3][6] = State.dark
@@ -160,25 +169,55 @@ class WhenTestingBoardRules(unittest.TestCase):
         self.board['board'][3][4] = State.empty
         self.assertFalse(br.is_obstructed(self.board, self.char1['pos']))
 
+    ######################### find_moves ##############################
+    # TODO: Fix these tests to compare proper list of coordinates
+    def test_find_moves_roll_1_true(self):
+        self.board['board'][4][2] = State.dark
+        self.assertEqual(len(br.find_moves(
+            self.board, 1, {'x': 4, 'y': 2})), 5)
+
+    def test_find_moves_roll_2_true(self):
+        self.board['board'][4][2] = State.dark
+        self.assertEqual(len(br.find_moves(
+            self.board, 2, {'x': 4, 'y': 2})), 13)
+
+    def test_find_moves_roll_3_true(self):
+        self.board['board'][4][2] = State.dark
+        self.assertEqual(len(br.find_moves(
+            self.board, 3, {'x': 4, 'y': 2})), 25)
+
+    # TODO: fix out of bounds issues if number of moves is too high
+    # def test_find_moves_roll_4_true(self):
+    #     self.board['board'][4][2] = State.dark
+    #     self.assertEqual(len(br.find_moves(
+    #         self.board, 4, {'x': 4, 'y': 2})), 13)
+
+    # def test_find_moves_roll_5_true(self):
+    #     self.board['board'][4][2] = State.dark
+    #     self.assertEqual(len(br.find_moves(
+    #         self.board, 5, {'x': 4, 'y': 2})), 25)
+
     # def test_find_moves_true(self):
     #     self.maxDiff = None
     #     self.board['board'][4][2] = State.dark
     #     self.assertListEqual(br.find_moves(self.board, 2, {'x': 4, 'y': 2}),
     #                          [{'x': 3, 'y': 2},
-    #                           {'x': 4, 'y': 1},
-    #                           {'x': 3, 'y': 1},
     #                           {'x': 3, 'y': 3},
-    #                           {'x': 4, 'y': 0},
+    #                           {'x': 2, 'y': 2},
     #                           {'x': 5, 'y': 2},
-    #                           {'x': 4, 'y': 4},
     #                           {'x': 4, 'y': 3},
+    #                           {'x': 3, 'y': 1},
+    #                           {'x': 4, 'y': 1},
+    #                           {'x': 4, 'y': 4},
+    #                           {'x': 4, 'y': 0},
+    #                           {'x': 5, 'y': 1},
     #                           {'x': 5, 'y': 3},
-    #                           {'x': 4, 'y': 2},
     #                           {'x': 6, 'y': 2},
-    #                           {'x': 2, 'y': 2}])
-    #
+    #                           {'x': 4, 'y': 2},
+    #                           {'x': 3, 'y': 1},
+    #                           {'x': 4, 'y': 1}])
+
     # def test_find_moves_true_ish(self):
-    #
     #     self.maxDiff = None
     #     self.board['board'][4][2] = State.dark
     #     self.assertListEqual(br.find_moves(self.board, 3, {'x': 4, 'y': 2}),

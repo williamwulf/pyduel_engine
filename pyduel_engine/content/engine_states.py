@@ -66,3 +66,4 @@ class Character(Enum):
 class Boards(Enum):
     """generic boards"""
     board = 0
+

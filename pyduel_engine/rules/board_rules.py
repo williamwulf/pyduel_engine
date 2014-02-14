@@ -177,6 +177,7 @@ def can_move_through(board, pos, new_pos):
 
 
 def find_moves(board, num_moves, pos, new_pos=None, list_moves=None):
+    # TODO: Make sense of all this and document it properly
     """returns list of all possible moves for a given character
     """
     if not new_pos:
@@ -186,10 +187,10 @@ def find_moves(board, num_moves, pos, new_pos=None, list_moves=None):
         list_moves = []
 
     if num_moves == -1:
-        return list_moves
+        return [dict(t) for t in set([tuple(d.items()) for d in list_moves])]
 
     if is_out_of_bounds(board, pos) or is_obstructed(board, pos):
-        return list_moves
+        return [dict(t) for t in set([tuple(d.items()) for d in list_moves])]
 
     num_moves -= 1
 

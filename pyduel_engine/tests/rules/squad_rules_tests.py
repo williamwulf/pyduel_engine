@@ -1,5 +1,3 @@
-__author__ = 'aelkikhia'
-
 
 import unittest
 
@@ -10,9 +8,9 @@ from pyduel_engine.rules import squad_rules as sr
 
 
 def suite():
-    test_suites = unittest.TestSuite()
-    test_suites.addTest(WhenTestingSquadRules())
-    return test_suites
+    suites = unittest.TestSuite()
+    suites.addTest(WhenTestingSquadRules())
+    return suites
 
 
 class WhenTestingSquadRules(unittest.TestCase):
@@ -62,10 +60,11 @@ class WhenTestingSquadRules(unittest.TestCase):
                        'discard': [],
                        'side': State.dark}
 
-    def are_minors_dead_false_both_alive(self):
+    ######################## are_minors_dead(squad) #########################
+    def test_are_minors_dead_false_both_alive(self):
         self.assertFalse(sr.are_minors_dead(self.squad1))
 
-    def are_minors_dead_test_false_one_dead(self):
+    def test_are_minors_dead_test_false_one_dead(self):
         self.minor_1l['hp'] = 4
         self.minor_2l['hp'] = 0
         self.squad1['characters'] = [self.main_1l,
@@ -73,7 +72,7 @@ class WhenTestingSquadRules(unittest.TestCase):
                                      self.minor_2l]
         self.assertFalse(sr.are_minors_dead(self.squad1))
 
-    def are_minors_dead_test_true_both_dead(self):
+    def test_are_minors_dead_test_true_both_dead(self):
         self.minor_1l['hp'] = 0
         self.minor_2l['hp'] = 0
         self.squad1['characters'] = [self.main_1l,
@@ -81,6 +80,7 @@ class WhenTestingSquadRules(unittest.TestCase):
                                      self.minor_2l]
         self.assertTrue(sr.are_minors_dead(self.squad1))
 
+    ######################## can_act(squad) ##############################
     def test_can_act_true(self):
         self.assertTrue(sr.can_act(self.squad1))
 
@@ -88,6 +88,7 @@ class WhenTestingSquadRules(unittest.TestCase):
         self.squad1['actions'] = 0
         self.assertFalse(sr.can_act(self.squad1))
 
+    ######################## can_play_card(squad) ########################
     def test_can_play_card_false_no_actions(self):
         self.squad1['actions'] = 0
         self.assertFalse(sr.can_play_card(self.squad1))
@@ -99,10 +100,11 @@ class WhenTestingSquadRules(unittest.TestCase):
         self.squad1['hand'].append({'test_card': None})
         self.assertTrue(sr.can_play_card(self.squad1))
 
-    def is_main_dead_false(self):
+    ######################## is_main_dead(squad) #########################
+    def test_is_main_dead_false(self):
         self.assertFalse(sr.is_main_dead(self.squad1))
 
-    def is_main_dead_true(self):
+    def test_is_main_dead_true(self):
         self.main_1l['hp'] = 0
         self.squad1['characters'] = [self.main_1l,
                                      self.minor_1l,
