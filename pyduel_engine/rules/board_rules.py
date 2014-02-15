@@ -150,74 +150,106 @@ def get_all_adjacent_enemies(chars, origin):
 
 
 def is_obstructed(board, pos):
-    """Verify if a character can move through any of the adjacent squares
-    """
-    return \
-        not can_move_through(board, pos,
-                             {'x': pos['x'], 'y': pos['y'] - 1}) and \
-        not can_move_through(board, pos,
-                             {'x': pos['x'], 'y': pos['y'] + 1}) and \
-        not can_move_through(board, pos,
-                             {'x': pos['x'] - 1, 'y': pos['y']}) and \
-        not can_move_through(board, pos, {'x': pos['x'] + 1, 'y': pos['y']})
+    """Verify if a character can move through any of the adjacent squares"""
+    return not can_move_through(board, pos, shift_down(pos)) and \
+        not can_move_through(board, pos, shift_up(pos)) and \
+        not can_move_through(board, pos, shift_left(pos)) and \
+        not can_move_through(board, pos, shift_right(pos))
 
 
 def is_out_of_bounds(board, pos):
-    """check if square is out of bounds or not
-    """
+    """check if square is out of bounds or not"""
     return pos['x'] >= board['max_x'] or pos['x'] < 0 or pos['y'] < 0 or \
         pos['y'] >= board['max_y']
 
 
 def can_move_through(board, pos, new_pos):
-    """verifies if a a square can be moved on or through
-    """
+    """verifies if a a square can be moved on or through"""
     return square_state(board, new_pos) == Sq.empty or \
         square_state(board, new_pos) == square_state(board, pos)
 
 
-def find_moves(board, num_moves, pos, new_pos=None, list_moves=None):
-    # TODO: Make sense of all this and document it properly
-    """returns list of all possible moves for a given character
-    """
+def is_valid_move(board, pos, new_pos):
+    """check if is valid move"""
+    return not is_out_of_bounds(board, new_pos) and pos != new_pos and \
+        can_move_through(board, pos, new_pos)
+
+
+def is_empty(board, pos):
+    """make sure square is empty"""
+    return square_state(board, pos) == Sq.empty
+
+
+def shift_up(pos):
+    """returns new position that has shifted up"""
+    return {'x': pos['x'], 'y': pos['y'] + 1}
+
+
+def shift_down(pos):
+    """returns new position that has shifted down"""
+    return {'x': pos['x'], 'y': pos['y'] - 1}
+
+
+def shift_right(pos):
+    """returns new position that has shifted right"""
+    return {'x': pos['x'] + 1, 'y': pos['y']}
+
+
+def shift_left(pos):
+    """returns new position that has shifted left"""
+    return {'x': pos['x'] - 1, 'y': pos['y']}
+
+
+def find_moves(board, num_moves, old_pos, new_pos=None, possible_moves=None):
+
+    # if this is the first call, set new position gets our current position
+    # we can use the pos variable to make sure we don't backtrack,
+    # also create possible_moves list
     if not new_pos:
-        new_pos = pos
+        new_pos = old_pos
+        possible_moves = []
 
-    if list_moves is None:
-        list_moves = []
-
+    # if no num_moves
     if num_moves == -1:
-        return [dict(t) for t in set([tuple(d.items()) for d in list_moves])]
+        return possible_moves
 
-    if is_out_of_bounds(board, pos) or is_obstructed(board, pos):
-        return [dict(t) for t in set([tuple(d.items()) for d in list_moves])]
-
+    # decrement the number of moves
     num_moves -= 1
 
-    list_moves.append(new_pos)
+    # add
+    if is_empty(board, new_pos):
+        possible_moves.append(new_pos)
 
-    if can_move_through(
-            board, new_pos, {'x': new_pos['x'], 'y': new_pos['y'] - 1}) and \
-            pos != {'x': new_pos['x'], 'y': new_pos['y'] - 1}:
-        find_moves(board, num_moves, new_pos,
-                   {'x': new_pos['x'], 'y': new_pos['y'] - 1}, list_moves)
+    # check up
+    up = shift_up(new_pos)
+    if is_valid_move(board, up, old_pos):
+        find_moves(board, num_moves, new_pos, up, possible_moves)
 
-    if can_move_through(
-            board, new_pos, {'x': new_pos['x'], 'y': new_pos['y'] + 1}) and \
-            pos != {'x': new_pos['x'], 'y': new_pos['y'] + 1}:
-        find_moves(board, num_moves, new_pos,
-                   {'x': new_pos['x'], 'y': new_pos['y'] + 1}, list_moves)
+    # check down
+    down = shift_down(new_pos)
+    if is_valid_move(board, up, old_pos):
+        find_moves(board, num_moves, new_pos, down, possible_moves)
 
-    if can_move_through(
-            board, new_pos, {'x': new_pos['x'] - 1, 'y': new_pos['y']}) and \
-            pos != {'x': new_pos['x'] - 1, 'y': new_pos['y']}:
-        find_moves(board, num_moves,  new_pos,
-                   {'x': new_pos['x'] - 1, 'y': new_pos['y']}, list_moves)
+    # check left
+    left = shift_left(new_pos)
+    if is_valid_move(board, up, old_pos):
+        find_moves(board, num_moves, new_pos, left, possible_moves)
 
-    if can_move_through(
-            board, new_pos, {'x': new_pos['x'] + 1, 'y': new_pos['y']}) and \
-            pos != {'x': new_pos['x'] + 1, 'y': new_pos['y']}:
-        find_moves(board, num_moves, new_pos,
-                   {'x': new_pos['x'] + 1, 'y': new_pos['y']}, list_moves)
+    # check right
+    right = shift_right(new_pos)
+    if is_valid_move(board, up, old_pos):
+        find_moves(board, num_moves, new_pos, right, possible_moves)
 
-    return [dict(t) for t in set([tuple(d.items()) for d in list_moves])]
+
+        #
+        # def how_far_away_melee(board, char1, char2):
+        #     """how many moves to get in melee attack range"""
+        #     pass
+        #
+        #
+        # def how_far_away_range(board, char1, char2):
+        #     """how many moves to get in attack range"""
+        #     pass
+
+
+

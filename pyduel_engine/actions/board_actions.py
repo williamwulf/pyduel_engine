@@ -51,7 +51,7 @@ def remove_character(board, character):
 def remove_multiple_characters(board, characters):
     """Remove Character from board
     :param board: dictionary
-    :param character: dictionary
+    :param characters: dictionary
     """
     pass
 
